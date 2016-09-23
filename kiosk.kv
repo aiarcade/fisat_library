@@ -1,0 +1,55 @@
+#:kivy 1.0.9
+
+<KioskMainUi>:
+
+    center_label: center_label
+    mode_spinner: mode_spinner
+    FloatLayout:
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: 1.0, 1.0
+            pos_hint: {"x": 0, "y": 0}
+            padding: "5sp"
+            spacing: "5sp"
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0, 0, 1, 0.3
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                text: "Custom Keyboard Demo"
+                size_hint_y: 0.1
+            Label:
+                id: center_label
+                markup: True
+                size_hint_y: 0.6
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: 0.1
+                padding: "5sp"
+                Widget:
+                    size_hint_x: 0.2
+                Label:
+                    text: "Current keyboard mode :"
+                Spinner:
+                    id: mode_spinner
+                    values: "''", "'dock'", "'system'", "'systemanddock'","'systemandmulti'"
+                Button:
+                    text: "Set"
+                    on_release: root.set_mode(mode_spinner.text)
+                Widget:
+                    size_hint_x: 0.2
+            Widget:
+                size_hint_y: 0.1
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: 0.1
+                Button:
+                    text: "Exit"
+                    on_release: exit()
+                Button:
+                    text: "Continue"
+                    on_release: root.next()
