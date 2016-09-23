@@ -75,6 +75,6 @@ class KioskApp(App):
 
 if __name__ == '__main__':
     from kivy.core.window import Window
-    #Window.fullscreen = True
+    Window.fullscreen = True
     #Window.rotation=90
     KioskApp().run()
