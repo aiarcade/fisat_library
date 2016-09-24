@@ -36,13 +36,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mainLayout->addItem(bottomLayout);
 
+    QHBoxLayout *searchLayout = new QHBoxLayout;
 
-    QTextEdit *searchInput= new QTextEdit;
+    bottomLayout->addItem(searchLayout);
+
+
+    QLineEdit *searchInput= new QLineEdit;
 
     searchInput->setPlaceholderText("Search for book ");
-    searchInput->setGeometry(QRect(0,0,200,50));
 
-    bottomLayout->addWidget(searchInput);
+    QPushButton *searchButton = new QPushButton("Search");
+
+
+    searchLayout->addWidget(searchInput);
+    searchLayout->addWidget(searchButton);
 
     QTableWidget * searchView= new QTableWidget;
 
@@ -67,6 +74,33 @@ MainWindow::MainWindow(QWidget *parent) :
 
             // Set QWidget as the central layout of the main window
     setCentralWidget(window);
+
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+        db.setHostName("172.16.170.1");
+        db.setDatabaseName("FICDB");
+        db.setUserName("mahesh");
+        db.setPassword("mahesh");
+        if (!db.open())
+        {
+          QMessageBox::critical(0, QObject::tr("Database Error"),
+                    db.lastError().text());
+        }
+
+        QSqlQuery query("select * from L_BookDtls where L_BD_cTitle like 'BASIC%'");
+
+
+        searchView->setColumnCount(query.record().count());
+        searchView->setRowCount(query.size());
+
+        int index=0;
+        while (query.next())
+        {
+        searchView->setItem(index,0,new QTableWidgetItem(query.value(0).toString()));
+        searchView->setItem(index,1,new QTableWidgetItem(query.value(1).toString()));
+        index++;
+        }
+
 
 
 

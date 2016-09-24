@@ -5,9 +5,13 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QWidget>
-#include <QTextEdit>
+#include <QLineEdit>
 #include <QTableWidget>
-
+#include <QSqlDatabase>
+#include <QSqlRecord>
+#include <QSqlQuery>
+#include <QMessageBox>
+#include <QSqlError>
 namespace Ui {
 class MainWindow;
 }
