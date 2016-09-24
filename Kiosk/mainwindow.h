@@ -12,6 +12,8 @@
 #include <QSqlQuery>
 #include <QMessageBox>
 #include <QSqlError>
+
+#include <QDebug>
 namespace Ui {
 class MainWindow;
 }
@@ -27,6 +29,11 @@ public:
 private:
     QWidget *cwidget;
     Ui::MainWindow *ui;
+     QTableWidget * searchView;
+      QLineEdit *searchInput;
+
+private slots:
+    void search();
 };
 
 #endif // MAINWINDOW_H
