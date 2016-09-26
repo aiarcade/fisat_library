@@ -16,6 +16,9 @@
 #include <QDebug>
 #include"searchwidget.h"
 #include "glwidget.h"
+#include "proximityreader.h"
+
+
 
 
 namespace Ui {
@@ -29,11 +32,23 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     GLWidget *screensaver;
+    ProximityReader *facedetector;
+    void enableSearchWidget();
+    void enableScreenSaver();
+
     ~MainWindow();
 
 private:
 
     Ui::MainWindow *ui;
+    int activeWidget; //0 for sc, 1 for search
+    QVBoxLayout *mainLayout;
+    QHBoxLayout *topLayout;
+    QVBoxLayout *bottomLayout;
+    SearchWidget *swidget;
+    QTimer *widgetTimer;
+private slots:
+       void updateWidgets();
 
 
 };

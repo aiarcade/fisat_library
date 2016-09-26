@@ -16,13 +16,15 @@ SOURCES += main.cpp\
     mainwindow.cpp \
     searchwidget.cpp \
     mapwidget.cpp \
-    glwidget.cpp
+    glwidget.cpp \
+    proximityreader.cpp
 
 HEADERS  += \
     mainwindow.h \
     searchwidget.h \
     mapwidget.h \
-    glwidget.h
+    glwidget.h \
+    proximityreader.h
 
 FORMS    += \
     mainwindow.ui
