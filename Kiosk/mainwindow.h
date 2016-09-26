@@ -14,6 +14,10 @@
 #include <QSqlError>
 
 #include <QDebug>
+#include"searchwidget.h"
+#include "glwidget.h"
+
+
 namespace Ui {
 class MainWindow;
 }
@@ -24,16 +28,14 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+    GLWidget *screensaver;
     ~MainWindow();
 
 private:
-    QWidget *cwidget;
-    Ui::MainWindow *ui;
-     QTableWidget * searchView;
-      QLineEdit *searchInput;
 
-private slots:
-    void search();
+    Ui::MainWindow *ui;
+
+
 };
 
 #endif // MAINWINDOW_H

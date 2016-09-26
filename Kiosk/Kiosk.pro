@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui  sql
+QT       += core gui  sql opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,10 +13,16 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-    mainwindow.cpp
+    mainwindow.cpp \
+    searchwidget.cpp \
+    mapwidget.cpp \
+    glwidget.cpp
 
 HEADERS  += \
-    mainwindow.h
+    mainwindow.h \
+    searchwidget.h \
+    mapwidget.h \
+    glwidget.h
 
 FORMS    += \
     mainwindow.ui
