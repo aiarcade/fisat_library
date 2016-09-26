@@ -1,164 +1,217 @@
-#include "glwidget.h"
+#include <QtGui>
+ #include <QtOpenGL>
+ #include <stdlib.h>
 
+ #include <math.h>
 
+ #include "bubble.h"
 
+ #include "glwidget.h"
 
-GLWidget::GLWidget(QWidget *parent)
-    : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
-{
-    xRot = 0;
-    yRot = 0;
-    zRot = 0;
-    zRot = 0;
+ #ifndef GL_MULTISAMPLE
+ #define GL_MULTISAMPLE  0x809D
+ #endif
 
-}
+ GLWidget::GLWidget(QWidget *parent)
+     : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
+ {
+     QTime midnight(0, 0, 0);
+     qsrand(midnight.secsTo(QTime::currentTime()));
 
-GLWidget::~GLWidget()
-{
-}
+     //logo = 0;
+     xRot = 0;
+     yRot = 0;
+     zRot = 0;
 
-QSize GLWidget::minimumSizeHint() const
-{
-    return QSize(50, 50);
-}
+     qtGreen = QColor::fromCmykF(0.40, 0.0, 1.0, 0.0);
+     qtPurple = QColor::fromCmykF(0.39, 0.39, 0.0, 0.0);
 
-QSize GLWidget::sizeHint() const
-{
-    return QSize(400, 400);
-}
+     animationTimer.setSingleShot(false);
+     connect(&animationTimer, SIGNAL(timeout()), this, SLOT(animate()));
+     animationTimer.start(25);
 
-static void qNormalizeAngle(int &angle)
-{
-    while (angle < 0)
-        angle += 360 * 16;
-    while (angle > 360)
-        angle -= 360 * 16;
-}
+     setAutoFillBackground(false);
+     setMinimumSize(200, 200);
+     setWindowTitle(tr("Overpainting a Scene"));
+ }
 
-void GLWidget::setXRotation(int angle)
-{
-    qNormalizeAngle(angle);
-    if (angle != xRot) {
-        xRot = angle;
-        emit xRotationChanged(angle);
-        updateGL();
-    }
-}
+ GLWidget::~GLWidget()
+ {
+ }
 
-void GLWidget::setYRotation(int angle)
-{
-    qNormalizeAngle(angle);
-    if (angle != yRot) {
-        yRot = angle;
-        emit yRotationChanged(angle);
-        updateGL();
-    }
-}
+ static void qNormalizeAngle(int &angle)
+ {
+     while (angle < 0)
+         angle += 360 * 16;
+     while (angle > 360 * 16)
+         angle -= 360 * 16;
+ }
 
-void GLWidget::setZRotation(int angle)
-{
-    qNormalizeAngle(angle);
-    if (angle != zRot) {
-        zRot = angle;
-        emit zRotationChanged(angle);
-        updateGL();
-    }
-}
+ void GLWidget::setXRotation(int angle)
+ {
+     qNormalizeAngle(angle);
+     if (angle != xRot)
+         xRot = angle;
+ }
 
-void GLWidget::initializeGL()
-{
-    qglClearColor(Qt::black);
+ void GLWidget::setYRotation(int angle)
+ {
+     qNormalizeAngle(angle);
+     if (angle != yRot)
+         yRot = angle;
+ }
 
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    glShadeModel(GL_SMOOTH);
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
+ void GLWidget::setZRotation(int angle)
+ {
+     qNormalizeAngle(angle);
+     if (angle != zRot)
+         zRot = angle;
+ }
 
-    static GLfloat lightPosition[4] = { 0, 0, 10, 1.0 };
-    glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
-}
+ void GLWidget::initializeGL()
+ {
+     glEnable(GL_MULTISAMPLE);
 
-void GLWidget::paintGL()
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glLoadIdentity();
-    glTranslatef(0.0, 0.0, -10.0);
-    glRotatef(xRot / 16.0, 1.0, 0.0, 0.0);
-    glRotatef(yRot / 16.0, 0.0, 1.0, 0.0);
-    glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
-    draw();
-}
+     //logo = new QtLogo(this);
+     //logo->setColor(qtGreen.dark());
+ }
 
-void GLWidget::resizeGL(int width, int height)
-{
-    int side = qMin(width, height);
-    glViewport((width - side) / 2, (height - side) / 2, side, side);
+ void GLWidget::mousePressEvent(QMouseEvent *event)
+ {
+     lastPos = event->pos();
+ }
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-#ifdef QT_OPENGL_ES_1
-    glOrthof(-2, +2, -2, +2, 1.0, 15.0);
-#else
-    glOrtho(-2, +2, -2, +2, 1.0, 15.0);
-#endif
-    glMatrixMode(GL_MODELVIEW);
-}
+ void GLWidget::mouseMoveEvent(QMouseEvent *event)
+ {
+     int dx = event->x() - lastPos.x();
+     int dy = event->y() - lastPos.y();
 
-void GLWidget::mousePressEvent(QMouseEvent *event)
-{
-    lastPos = event->pos();
-}
+     if (event->buttons() & Qt::LeftButton) {
+         setXRotation(xRot + 8 * dy);
+         setYRotation(yRot + 8 * dx);
+     } else if (event->buttons() & Qt::RightButton) {
+         setXRotation(xRot + 8 * dy);
+         setZRotation(zRot + 8 * dx);
+     }
+     lastPos = event->pos();
+ }
 
-void GLWidget::mouseMoveEvent(QMouseEvent *event)
-{
-    int dx = event->x() - lastPos.x();
-    int dy = event->y() - lastPos.y();
+ void GLWidget::paintEvent(QPaintEvent *event)
+ {
+     makeCurrent();
+     glMatrixMode(GL_MODELVIEW);
+     glPushMatrix();
 
-    if (event->buttons() & Qt::LeftButton) {
-        setXRotation(xRot + 8 * dy);
-        setYRotation(yRot + 8 * dx);
-    } else if (event->buttons() & Qt::RightButton) {
-        setXRotation(xRot + 8 * dy);
-        setZRotation(zRot + 8 * dx);
-    }
+     qglClearColor(qtPurple.dark());
+     glShadeModel(GL_SMOOTH);
+     glEnable(GL_DEPTH_TEST);
+     glEnable(GL_CULL_FACE);
+     glEnable(GL_LIGHTING);
+     glEnable(GL_LIGHT0);
+     glEnable(GL_MULTISAMPLE);
+     static GLfloat lightPosition[4] = { 0.5, 5.0, 7.0, 1.0 };
+     glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
 
-    lastPos = event->pos();
-}
+     setupViewport(width(), height());
 
-void GLWidget::draw()
-{
-    qglColor(Qt::red);
-    glBegin(GL_QUADS);
-        glNormal3f(0,0,-1);
-        glVertex3f(-1,-1,0);
-        glVertex3f(-1,1,0);
-        glVertex3f(1,1,0);
-        glVertex3f(1,-1,0);
+     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+     glLoadIdentity();
+     glTranslatef(0.0, 0.0, -10.0);
+     glRotatef(xRot / 16.0, 1.0, 0.0, 0.0);
+     glRotatef(yRot / 16.0, 0.0, 1.0, 0.0);
+     glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
 
-    glEnd();
-    glBegin(GL_TRIANGLES);
-        glNormal3f(0,-1,0.707);
-        glVertex3f(-1,-1,0);
-        glVertex3f(1,-1,0);
-        glVertex3f(0,0,1.2);
-    glEnd();
-    glBegin(GL_TRIANGLES);
-        glNormal3f(1,0, 0.707);
-        glVertex3f(1,-1,0);
-        glVertex3f(1,1,0);
-        glVertex3f(0,0,1.2);
-    glEnd();
-    glBegin(GL_TRIANGLES);
-        glNormal3f(0,1,0.707);
-        glVertex3f(1,1,0);
-        glVertex3f(-1,1,0);
-        glVertex3f(0,0,1.2);
-    glEnd();
-    glBegin(GL_TRIANGLES);
-        glNormal3f(-1,0,0.707);
-        glVertex3f(-1,1,0);
-        glVertex3f(-1,-1,0);
-        glVertex3f(0,0,1.2);
-    glEnd();
-}
+     //logo->draw();
+
+     glShadeModel(GL_FLAT);
+     glDisable(GL_CULL_FACE);
+     glDisable(GL_DEPTH_TEST);
+     glDisable(GL_LIGHTING);
+
+     glMatrixMode(GL_MODELVIEW);
+     glPopMatrix();
+
+     QPainter painter(this);
+     painter.setRenderHint(QPainter::Antialiasing);
+     foreach (Bubble *bubble, bubbles) {
+         if (bubble->rect().intersects(event->rect()))
+             bubble->drawBubble(&painter);
+     }
+     drawInstructions(&painter);
+     painter.end();
+ }
+
+ void GLWidget::resizeGL(int width, int height)
+ {
+     setupViewport(width, height);
+ }
+
+ void GLWidget::showEvent(QShowEvent *event)
+ {
+     Q_UNUSED(event);
+     createBubbles(20 - bubbles.count());
+ }
+
+ QSize GLWidget::sizeHint() const
+ {
+     return QSize(400, 400);
+ }
+
+ void GLWidget::createBubbles(int number)
+ {
+     for (int i = 0; i < number; ++i) {
+         QPointF position(width()*(0.1 + (0.8*qrand()/(RAND_MAX+1.0))),
+                         height()*(0.1 + (0.8*qrand()/(RAND_MAX+1.0))));
+         qreal radius = qMin(width(), height())*(0.0125 + 0.0875*qrand()/(RAND_MAX+1.0));
+         QPointF velocity(width()*0.0125*(-0.5 + qrand()/(RAND_MAX+1.0)),
+                         height()*0.0125*(-0.5 + qrand()/(RAND_MAX+1.0)));
+
+         bubbles.append(new Bubble(position, radius, velocity));
+     }
+ }
+
+ void GLWidget::animate()
+ {
+     QMutableListIterator<Bubble*> iter(bubbles);
+
+     while (iter.hasNext()) {
+         Bubble *bubble = iter.next();
+         bubble->move(rect());
+     }
+     update();
+ }
+
+ void GLWidget::setupViewport(int width, int height)
+ {
+     int side = qMin(width, height);
+     glViewport((width - side) / 2, (height - side) / 2, side, side);
+
+     glMatrixMode(GL_PROJECTION);
+     glLoadIdentity();
+ #ifdef QT_OPENGL_ES
+     glOrthof(-0.5, +0.5, -0.5, 0.5, 4.0, 15.0);
+ #else
+     glOrtho(-0.5, +0.5, -0.5, 0.5, 4.0, 15.0);
+ #endif
+     glMatrixMode(GL_MODELVIEW);
+ }
+
+ void GLWidget::drawInstructions(QPainter *painter)
+ {
+     QString text = tr("Click and drag with the left mouse button "
+                       "to rotate the Qt logo.");
+     QFontMetrics metrics = QFontMetrics(font());
+     int border = qMax(4, metrics.leading());
+
+     QRect rect = metrics.boundingRect(0, 0, width() - 2*border, int(height()*0.125),
+                                       Qt::AlignCenter | Qt::TextWordWrap, text);
+     painter->setRenderHint(QPainter::TextAntialiasing);
+     painter->fillRect(QRect(0, 0, width(), rect.height() + 2*border),
+                      QColor(0, 0, 0, 127));
+     painter->setPen(Qt::white);
+     painter->fillRect(QRect(0, 0, width(), rect.height() + 2*border),
+                       QColor(0, 0, 0, 127));
+     painter->drawText((width() - rect.width())/2, border,
+                       rect.width(), rect.height(),
+                       Qt::AlignCenter | Qt::TextWordWrap, text);
+ }

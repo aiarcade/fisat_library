@@ -17,14 +17,16 @@ SOURCES += main.cpp\
     searchwidget.cpp \
     mapwidget.cpp \
     glwidget.cpp \
-    proximityreader.cpp
+    proximityreader.cpp \
+    bubble.cpp
 
 HEADERS  += \
     mainwindow.h \
     searchwidget.h \
     mapwidget.h \
     glwidget.h \
-    proximityreader.h
+    proximityreader.h \
+    bubble.h
 
 FORMS    += \
     mainwindow.ui

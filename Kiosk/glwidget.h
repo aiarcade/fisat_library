@@ -1,59 +1,63 @@
 #ifndef GLWIDGET_H
 #define GLWIDGET_H
 
+#include <QBrush>
+ #include <QFont>
+ #include <QImage>
+ #include <QPen>
+ #include <QGLWidget>
+ #include <QTimer>
 
-// GLWidget.cpp
+ class Bubble;
+ //class QtLogo;
+ class QPaintEvent;
+ class QWidget;
 
+ class GLWidget : public QGLWidget
+ {
+     Q_OBJECT
 
-#include <QtWidgets>
-#include <QtOpenGL>
+ public:
+     GLWidget(QWidget *parent = 0);
+     ~GLWidget();
 
-#include "glwidget.h"
+     QSize sizeHint() const;
+     int xRotation() const { return xRot; }
+     int yRotation() const { return yRot; }
+     int zRotation() const { return zRot; }
 
+ public slots:
+     void setXRotation(int angle);
+     void setYRotation(int angle);
+     void setZRotation(int angle);
 
-#include <QGLWidget>
+ protected:
+     void initializeGL();
+     void paintEvent(QPaintEvent *event);
+     void resizeGL(int width, int height);
+     void mousePressEvent(QMouseEvent *event);
+     void mouseMoveEvent(QMouseEvent *event);
+     void showEvent(QShowEvent *event);
 
-class GLWidget : public QGLWidget
-{
-    Q_OBJECT
-public:
-    explicit GLWidget(QWidget *parent = 0);
-    ~GLWidget();
-signals:
+ private slots:
+     void animate();
 
-public slots:
+ private:
+     void createBubbles(int number);
+     void drawInstructions(QPainter *painter);
+     void setupViewport(int width, int height);
 
-protected:
-    void initializeGL();
-    void paintGL();
-    void resizeGL(int width, int height);
+     QColor qtGreen;
+     QColor qtPurple;
 
-    QSize minimumSizeHint() const;
-    QSize sizeHint() const;
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
+     GLuint object;
+     int xRot;
+     int yRot;
+     int zRot;
+     QPoint lastPos;
+     //QtLogo *logo;
+     QList<Bubble*> bubbles;
+     QTimer animationTimer;
+ };
 
-public slots:
-    // slots for xyz-rotation slider
-    void setXRotation(int angle);
-    void setYRotation(int angle);
-    void setZRotation(int angle);
-
-signals:
-    // signaling rotation from mouse movement
-    void xRotationChanged(int angle);
-    void yRotationChanged(int angle);
-    void zRotationChanged(int angle);
-
-private:
-    void draw();
-
-    int xRot;
-    int yRot;
-    int zRot;
-
-    QPoint lastPos;
-};
-
-#endif // MYGLWIDGET_H
-
+ #endif
