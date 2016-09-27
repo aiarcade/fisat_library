@@ -121,7 +121,7 @@ void MainWindow::enableScreenSaver()
 }
 void MainWindow::updateWidgets()
 {
-    qDebug()<<"times up"<<facedetector->isPerson()<<activeWidget;
+    //qDebug()<<"times up"<<facedetector->isPerson()<<activeWidget;
     if(facedetector->isPerson()==0) enableScreenSaver();
     else enableSearchWidget();
 }

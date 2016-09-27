@@ -220,8 +220,7 @@
                      QBrush(QColor(220,20,60, 128)));
 
 
-     painter->fillRect(QRect((this->width()/5)-2, (this->height()/5)+600, (width()-2*width()/5)+50,highlights.length()*80),
-                     QBrush(QColor(220,20,60, 128)));
+
 
 
      painter->setFont(QFont("goodtimes",26));
@@ -259,4 +258,26 @@
          //qDebug()<<highlights[i].length();
 
       }
+
+
+     painter->fillRect(QRect((this->width()/5)-2, (this->height()/5)+600, (width()-2*width()/5)+50,highlights.length()*90),
+                     QBrush(QColor(220,20,60, 128)));
+
+     QString _quote="Do you know, there are 100 elephants in FISAT ?";//dbHelper.getQuoteOftheday();
+     QImage quoteImage;
+     quoteImage.load("/Users/mahesh/Dropbox/library_software/fisat_library/Kiosk/el.jpg");
+     qDebug()<<quoteImage.width();
+     quoteImage=quoteImage.scaled(width()-(2*width()/5)+50,highlights.length()*90);
+
+     painter->drawImage((this->width()/5), (this->height()/5)+600,
+
+                        quoteImage);
+
+     painter->drawText((this->width()/5)+5, (this->height()/5)+600,
+                        400, 75,
+                       Qt::AlignCenter | Qt::TextWordWrap ,_quote);
+
+
+
+
 }
