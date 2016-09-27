@@ -223,6 +223,9 @@
      painter->fillRect(QRect(0, 0, width(), 75),
                       QColor(220,20,60, 127));
 
+     painter->fillRect(QRect(0, height()-75, width(), 75),
+                      QColor(220,20,60, 127));
+
     painter->setPen(Qt::white);
      painter->drawText(0, 0,
                         width(), 75,
