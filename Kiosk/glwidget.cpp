@@ -213,10 +213,10 @@
 
      highlights = campusData->getHighlights((width()-2*width()/5+2)/(fontsize/2));
 
-     painter->fillRect(QRect((this->width()/5)-2, (this->height()/5)+2, (width()-2*width()/5)+20,highlights.length()*30),
+     painter->fillRect(QRect((this->width()/5)-2, (this->height()/5)+2, (width()-2*width()/5)+20,highlights.length()*50),
                      QBrush(QColor(128, 128, 255, 128)));
 
-     painter->setFont(QFont("goodtimes",22));
+     painter->setFont(QFont("goodtimes",26));
      for(int i=0;i<highlights.length();i++ )
      {
 
@@ -233,10 +233,10 @@
 
          QStringList pdata=highlights[i].split('+');
          painter->drawText(this->width()/5+40, (this->height()/5)+(i+1)*60,
-                            width()-2*width()/5, 45,
+                            width()-2*width()/5, 55,
                            Qt::AlignJustify ,pdata[0]);
-         painter->drawText(this->width()/5+600, (this->height()/5)+(i+1)*60,
-                            width()-2*width()/5, 45,
+         painter->drawText(this->width()/5+500, (this->height()/5)+(i+1)*60,
+                            width()-2*width()/5, 55,
                            Qt::AlignJustify ,pdata[1]);
 
          //qDebug()<<highlights[i].length();
