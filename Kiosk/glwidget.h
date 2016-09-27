@@ -46,7 +46,7 @@
 
  private:
      void createBubbles(int number);
-     void drawInstructions(QPainter *painter);
+     void drawHighLights(QPainter *painter);
      void setupViewport(int width, int height);
 
      QColor qtGreen;

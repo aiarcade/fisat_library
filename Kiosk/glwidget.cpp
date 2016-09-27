@@ -144,7 +144,7 @@
          if (bubble->rect().intersects(event->rect()))
              bubble->drawBubble(&painter);
      }
-     drawInstructions(&painter);
+     drawHighLights(&painter);
      painter.end();
  }
 
@@ -203,7 +203,7 @@
      glMatrixMode(GL_MODELVIEW);
  }
 
- void GLWidget::drawInstructions(QPainter *painter)
+ void GLWidget::drawHighLights(QPainter *painter)
  {
      QStringList  highlights;
      QString text("hello");
@@ -218,6 +218,11 @@
 
      painter->fillRect(QRect((this->width()/5)-2, (this->height()/5)+2, (width()-2*width()/5)+50,highlights.length()*80),
                      QBrush(QColor(220,20,60, 128)));
+
+
+     painter->fillRect(QRect((this->width()/5)-2, (this->height()/5)+200, (width()-2*width()/5)+50,highlights.length()*80),
+                     QBrush(QColor(220,20,60, 128)));
+
 
      painter->setFont(QFont("goodtimes",26));
      painter->fillRect(QRect(0, 0, width(), 75),
