@@ -233,10 +233,10 @@
 
          QStringList pdata=highlights[i].split('+');
          painter->drawText(this->width()/5+40, (this->height()/5)+(i+1)*40,
-                            width()-2*width()/5, rect.height()+2*border,
+                            width()-2*width()/5, 45,
                            Qt::AlignJustify ,pdata[0]);
          painter->drawText(this->width()/5+300, (this->height()/5)+(i+1)*40,
-                            width()-2*width()/5, rect.height()+2*border,
+                            width()-2*width()/5, 45,
                            Qt::AlignJustify ,pdata[1]);
 
          //qDebug()<<highlights[i].length();
