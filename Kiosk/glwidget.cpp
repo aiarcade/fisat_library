@@ -274,7 +274,7 @@
                         quoteImage);
 
      painter->drawText((this->width()/5)+5, (this->height()/5)+600,
-                        400, 75,
+                        800, 200,
                        Qt::AlignCenter | Qt::TextWordWrap ,_quote);
 
 
