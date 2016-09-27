@@ -213,7 +213,7 @@
 
      highlights = campusData->getHighlights((width()-2*width()/5+2)/(fontsize/2));
 
-     painter->fillRect(QRect((this->width()/5)-2, (this->height()/5)+2, (width()-2*width()/5)+20,highlights.length()*50),
+     painter->fillRect(QRect((this->width()/5)-2, (this->height()/5)+2, (width()-2*width()/5)+50,highlights.length()*80),
                      QBrush(QColor(128, 128, 255, 128)));
 
      painter->setFont(QFont("goodtimes",26));
