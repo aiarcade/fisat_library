@@ -211,12 +211,21 @@
      int border = qMax(4, metrics.leading());
      int fontsize=22;
 
+
+
+
      highlights = campusData->getHighlights((width()-2*width()/5+2)/(fontsize/2));
 
      painter->fillRect(QRect((this->width()/5)-2, (this->height()/5)+2, (width()-2*width()/5)+50,highlights.length()*80),
                      QBrush(QColor(32,178,170, 128)));
 
      painter->setFont(QFont("goodtimes",26));
+
+    painter->setPen(Qt::white);
+     painter->drawText(0, 0,
+                        width(), 75,
+                       Qt::AlignCenter ,"WELCOME TO CENTRAL LIBRARY");
+
      for(int i=0;i<highlights.length();i++ )
      {
 
