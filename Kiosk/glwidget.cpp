@@ -33,6 +33,8 @@
      setAutoFillBackground(false);
      setMinimumSize(200, 200);
      setWindowTitle(tr("Overpainting a Scene"));
+
+     campusData=new DbHelper();
  }
 
  GLWidget::~GLWidget()
@@ -121,7 +123,12 @@
      glRotatef(yRot / 16.0, 0.0, 1.0, 0.0);
      glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
 
-     //logo->draw();
+     glColor3f(.1,.1,.4);
+     glBegin(GL_LINES);
+     glVertex2d(0,.0);
+     glVertex2d(.5,.5);
+     glEnd();
+
 
      glShadeModel(GL_FLAT);
      glDisable(GL_CULL_FACE);
@@ -198,20 +205,41 @@
 
  void GLWidget::drawInstructions(QPainter *painter)
  {
-     QString text = tr("Click and drag with the left mouse button "
-                       "to rotate the Qt logo.");
+     QStringList  highlights;
+     QString text("hello");
      QFontMetrics metrics = QFontMetrics(font());
      int border = qMax(4, metrics.leading());
+     int fontsize=22;
 
-     QRect rect = metrics.boundingRect(0, 0, width() - 2*border, int(height()*0.125),
-                                       Qt::AlignCenter | Qt::TextWordWrap, text);
-     painter->setRenderHint(QPainter::TextAntialiasing);
-     painter->fillRect(QRect(0, 0, width(), rect.height() + 2*border),
-                      QColor(0, 0, 0, 127));
-     painter->setPen(Qt::white);
-     painter->fillRect(QRect(0, 0, width(), rect.height() + 2*border),
-                       QColor(0, 0, 0, 127));
-     painter->drawText((width() - rect.width())/2, border,
-                       rect.width(), rect.height(),
-                       Qt::AlignCenter | Qt::TextWordWrap, text);
- }
+     highlights = campusData->getHighlights((width()-2*width()/5+2)/(fontsize/2));
+
+     painter->fillRect(QRect((this->width()/5)-2, (this->height()/5)+2, (width()-2*width()/5)+20,highlights.length()*30),
+                     QBrush(QColor(128, 128, 255, 128)));
+
+     painter->setFont(QFont("goodtimes",22));
+     for(int i=0;i<highlights.length();i++ )
+     {
+
+         QRect rect = metrics.boundingRect(0, 0, width() - 2*border, int(height()*0.125),
+                                           Qt::AlignCenter | Qt::TextWordWrap, text);
+
+
+         painter->setRenderHint(QPainter::TextAntialiasing);
+
+         painter->fillRect(QRect(0, 0, width(), rect.height() + 2*border),
+                          QColor(0, 0, 0, 127));
+
+         painter->setPen(Qt::white);
+
+         QStringList pdata=highlights[i].split('+');
+         painter->drawText(this->width()/5+40, (this->height()/5)+(i+1)*40,
+                            width()-2*width()/5, rect.height()+2*border,
+                           Qt::AlignJustify ,pdata[0]);
+         painter->drawText(this->width()/5+300, (this->height()/5)+(i+1)*40,
+                            width()-2*width()/5, rect.height()+2*border,
+                           Qt::AlignJustify ,pdata[1]);
+
+         //qDebug()<<highlights[i].length();
+
+      }
+}

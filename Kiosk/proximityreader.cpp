@@ -16,7 +16,7 @@ int ProximityReader::readFile()
     {
          while (std::getline(datafile, _line))
                  ++count;
-             std::cout << "Number of lines in text file: " << count;
+
 
     }
      datafile.close();

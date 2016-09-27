@@ -8,6 +8,8 @@
  #include <QGLWidget>
  #include <QTimer>
 
+#include "dbhelper.h"
+
  class Bubble;
  //class QtLogo;
  class QPaintEvent;
@@ -58,6 +60,10 @@
      //QtLogo *logo;
      QList<Bubble*> bubbles;
      QTimer animationTimer;
+
+     DbHelper *campusData;
+
+
  };
 
  #endif

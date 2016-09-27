@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     mapwidget.cpp \
     glwidget.cpp \
     proximityreader.cpp \
-    bubble.cpp
+    bubble.cpp \
+    dbhelper.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -26,7 +27,13 @@ HEADERS  += \
     mapwidget.h \
     glwidget.h \
     proximityreader.h \
-    bubble.h
+    bubble.h \
+    dbhelper.h
 
 FORMS    += \
     mainwindow.ui
+
+RESOURCES += \
+    files.qrc
+
+DISTFILES +=
