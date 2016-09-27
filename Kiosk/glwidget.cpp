@@ -220,7 +220,7 @@
                      QBrush(QColor(220,20,60, 128)));
 
 
-     painter->fillRect(QRect((this->width()/5)-2, (this->height()/5)+200, (width()-2*width()/5)+50,highlights.length()*80),
+     painter->fillRect(QRect((this->width()/5)-2, (this->height()/5)+600, (width()-2*width()/5)+50,highlights.length()*80),
                      QBrush(QColor(220,20,60, 128)));
 
 
