@@ -24,7 +24,7 @@
      zRot = 0;
 
      qtGreen = QColor::fromCmykF(0.40, 0.0, 1.0, 0.0);
-     qtPurple = QColor::fromCmykF(255, 255, 255, 0.0);
+     qtPurple = Qt::white;
 
      animationTimer.setSingleShot(false);
      connect(&animationTimer, SIGNAL(timeout()), this, SLOT(animate()));
@@ -217,9 +217,11 @@
      highlights = campusData->getHighlights((width()-2*width()/5+2)/(fontsize/2));
 
      painter->fillRect(QRect((this->width()/5)-2, (this->height()/5)+2, (width()-2*width()/5)+50,highlights.length()*80),
-                     QBrush(QColor(32,178,170, 128)));
+                     QBrush(QColor(220,20,60, 128)));
 
      painter->setFont(QFont("goodtimes",26));
+     painter->fillRect(QRect(0, 0, width(), 75),
+                      QColor(220,20,60, 127));
 
     painter->setPen(Qt::white);
      painter->drawText(0, 0,
@@ -235,8 +237,6 @@
 
          painter->setRenderHint(QPainter::TextAntialiasing);
 
-         painter->fillRect(QRect(0, 0, width(), rect.height() + 2*border),
-                          QColor(0, 0, 0, 127));
 
          painter->setPen(Qt::white);
 
