@@ -101,8 +101,8 @@ void SearchWidget::search()
     */
     QList<QStringList> results=duserQuery(searchInput->text());
     QStringList headers;
-    headers<< "Accession No" << "Call No" <<"Author" <<"Title" << "Location";
-    searchView->setColumnCount(5);
+    headers<< "Accession No" << "Call No" <<"Author" <<"Title" ;
+    searchView->setColumnCount(4);
     searchView->setRowCount(results.length());
     searchView->setHorizontalHeaderLabels(headers);
     searchView->setColumnWidth(3,300);
@@ -129,13 +129,22 @@ void SearchWidget::resultCellClicked(int r, int c)
     libMap->setTitle(searchView->item(r, 2)->text(),
                      searchView->item(r, 1)->text());
     libMap->renderMap();
+    libMap->setWindowFlags( Qt::WindowStaysOnTopHint);
+    libMap->setGeometry(
+        QStyle::alignedRect(
+            Qt::LeftToRight,
+            Qt::AlignCenter,
+            libMap->size(),
+            qApp->desktop()->availableGeometry()
+        )
+    );
     libMap->show();
 }
 
 void SearchWidget::fillDummyData()
 {
     QStringList headers;
-    headers<< "Accession No" << "Call No" <<"Title" <<"Author" << "Location";
+    headers<< "Accession No" << "Call No" <<"Title" <<"Author" ;
     searchView->setColumnCount(5);
     searchView->setRowCount(10);
     searchView->setHorizontalHeaderLabels(headers);

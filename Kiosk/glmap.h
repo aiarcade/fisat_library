@@ -11,7 +11,7 @@
 #include <QtWidgets>
 #include <QtOpenGL>
 
-#include "GLMap.h"
+
 
 
 #include <QGLWidget>

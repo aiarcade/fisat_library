@@ -44,7 +44,8 @@ void MapWidget::renderMap()
 
     QLabel *callLabel= new QLabel();
     callLabel->setFont(m);
-    callLabel->setText("CALL NO"+callNo);
+    callLabel->setText("CALL NO: "+callNo);
+    callLabel->setFixedHeight(100);
 
 
     QFont f( "goodtimes", 22, QFont::Bold);
@@ -122,6 +123,9 @@ void MapWidget::renderMap()
 
 
     QPushButton *closebttn = new QPushButton("BACK");
+    closebttn->setFixedHeight(100);
+
+     connect(closebttn,SIGNAL(clicked()),this,SLOT(closeMap()));
 
 
     QPainter painter(&bgPixmap);
@@ -175,6 +179,11 @@ void MapWidget::routeBlink()
 
 
 
+}
+
+void MapWidget::closeMap()
+{
+    this->close();
 }
 
 void MapWidget::mousePressEvent(QMouseEvent *event)

@@ -21,6 +21,8 @@ public:
     void setLocation(QString);
     void setTitle(QString,QString);
 
+
+
     void renderMap();
 
     int i;
@@ -31,6 +33,7 @@ signals:
 
 public slots:
     void routeBlink();
+     void closeMap();
 
 protected:
     void mousePressEvent(QMouseEvent *event);

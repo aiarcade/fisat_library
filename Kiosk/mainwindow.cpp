@@ -17,9 +17,12 @@ MainWindow::MainWindow(QWidget *parent) :
     mainLayout->addItem(topLayout);
 
 
+      QFont m( "goodtimes", 30, QFont::Bold);
+    QPushButton *button1 = new QPushButton("HIGHLIGHTS");
+    QPushButton *button2 = new QPushButton("SEARCH");
 
-    QPushButton *button1 = new QPushButton("HighLights");
-    QPushButton *button2 = new QPushButton("Search");
+    button1->setFont(m);
+     button2->setFont(m);
 
 
     button1->setFixedHeight(100);

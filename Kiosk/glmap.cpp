@@ -1,6 +1,6 @@
 #include "glmap.h"
 
-#include "GLMap.h"
+
 
 
 
