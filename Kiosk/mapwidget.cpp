@@ -110,7 +110,7 @@ void MapWidget::renderMap()
 
      qDebug()<<iname;
 
-    QImage level1Image= QImage(":/images/level0.jpg");
+    QImage level1Image= QImage(iname);
     this->setGeometry(QRect(0,0,level1Image.width(),level1Image.height()));
     bgLabel=new QLabel(this);
     bgLabel->setGeometry(0,0,this->width(),this->height());
@@ -124,6 +124,8 @@ void MapWidget::renderMap()
 
     QPushButton *closebttn = new QPushButton("BACK");
     closebttn->setFixedHeight(100);
+    closebttn->setFont(m);
+
 
      connect(closebttn,SIGNAL(clicked()),this,SLOT(closeMap()));
 
@@ -151,7 +153,7 @@ void MapWidget::renderMap()
 
     connect( routeTimer , SIGNAL(timeout()), this, SLOT(routeBlink()));
     i=0;
-    routeTimer ->start(5000);
+    //routeTimer ->start(5000);
 
 }
 

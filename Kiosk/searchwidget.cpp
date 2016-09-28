@@ -138,6 +138,7 @@ void SearchWidget::resultCellClicked(int r, int c)
             qApp->desktop()->availableGeometry()
         )
     );
+    libMap->setFixedWidth(this->width());
     libMap->show();
 }
 

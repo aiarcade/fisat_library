@@ -123,11 +123,7 @@
      glRotatef(yRot / 16.0, 0.0, 1.0, 0.0);
      glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
 
-     glColor3f(.1,.1,.4);
-     glBegin(GL_LINES);
-     glVertex2d(0,.0);
-     glVertex2d(.5,.5);
-     glEnd();
+
 
 
      glShadeModel(GL_FLAT);
