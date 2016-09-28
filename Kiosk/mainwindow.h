@@ -49,6 +49,8 @@ private:
     QTimer *widgetTimer;
 private slots:
        void updateWidgets();
+       void showHightLigts();
+       void showSearch();
 
 
 };

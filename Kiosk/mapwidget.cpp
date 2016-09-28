@@ -121,7 +121,7 @@ void MapWidget::renderMap()
 
 
 
-
+    QPushButton *closebttn = new QPushButton("BACK");
 
 
     QPainter painter(&bgPixmap);
@@ -135,7 +135,10 @@ void MapWidget::renderMap()
     bgLabel->setPixmap(bgPixmap);
 
      //mainLayout->addWidget(locLabel);
-    topLayout->addWidget(bgLabel,5,0,1,2);
+
+    topLayout->addWidget(closebttn,5,0,1,2);
+
+    topLayout->addWidget(bgLabel,6,0,1,2);
 
 
     routeTimer = new QTimer(this);

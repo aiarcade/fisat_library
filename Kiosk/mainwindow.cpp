@@ -18,18 +18,21 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-    QPushButton *button1 = new QPushButton("One");
-    QPushButton *button2 = new QPushButton("Two");
-    QPushButton *button3 = new QPushButton("Three");
-    QPushButton *button4 = new QPushButton("Four");
-    QPushButton *button5 = new QPushButton("Five");
+    QPushButton *button1 = new QPushButton("HighLights");
+    QPushButton *button2 = new QPushButton("Search");
+
+
+    button1->setFixedHeight(100);
+     button2->setFixedHeight(100);
+
+
 
 
     topLayout->addWidget(button1);
     topLayout->addWidget(button2);
-    topLayout->addWidget(button3);
-    topLayout->addWidget(button4);
-    topLayout->addWidget(button5);
+
+    connect(button1,SIGNAL(clicked()),this,SLOT(showHightLigts()));
+    connect(button2,SIGNAL(clicked()),this,SLOT(showSearch()));
 
 
      bottomLayout = new QVBoxLayout;
@@ -80,6 +83,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
 }
 
+void MainWindow::showHightLigts()
+{
+    enableScreenSaver();
+}
+void MainWindow::showSearch()
+{
+    enableSearchWidget();
+}
+
+
 void MainWindow::enableSearchWidget()
 {
 
@@ -122,8 +135,8 @@ void MainWindow::enableScreenSaver()
 void MainWindow::updateWidgets()
 {
     //qDebug()<<"times up"<<facedetector->isPerson()<<activeWidget;
-    if(facedetector->isPerson()==0) enableScreenSaver();
-    else enableSearchWidget();
+  /*  if(facedetector->isPerson()==0) enableScreenSaver();
+    else enableSearchWidget();*/
 }
 
 

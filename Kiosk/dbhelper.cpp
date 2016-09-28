@@ -97,7 +97,7 @@ QList<QByteArray> DbHelper::getLocation(QString callNo)
         //"CALLNO FROM", "CALLNO TO\n")
 
         QList<QByteArray> temp;
-        for(int i;i<locationData.length();i++)
+        for(int i=0;i<locationData.length();i++)
         {
            int d= distance(locationData[i][6].toStdString(),callNo.toStdString()) ;
             if(d<similarity)

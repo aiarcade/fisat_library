@@ -8,7 +8,7 @@ SearchWidget::SearchWidget(QWidget *parent) : QWidget(parent)
     QHBoxLayout *searchInLayout = new QHBoxLayout;
 
     searchInLayout->setSpacing(10);
-    //searchInLayout->SetFixedSize();
+    //searchInLayout->setGeometry();
 
     QVBoxLayout *searchLayout = new QVBoxLayout;
 
@@ -18,6 +18,8 @@ SearchWidget::SearchWidget(QWidget *parent) : QWidget(parent)
     searchInput->setPlaceholderText("Search for book ");
 
     QPushButton *searchButton = new QPushButton("Search");
+    searchButton->setFixedHeight(50);
+    searchInput->setFixedHeight(30);
 
     connect(searchButton,SIGNAL(clicked()),this,SLOT(search()));
 
@@ -120,7 +122,7 @@ void SearchWidget::search()
 
 void SearchWidget::resultCellClicked(int r, int c)
 {
-    QString callNo=searchView->item(r, c)->text();
+    QString callNo=searchView->item(r, 1 )->text();
     MapWidget *libMap = new MapWidget();
     libMap->setLocation(callNo);
 
