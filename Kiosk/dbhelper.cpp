@@ -32,13 +32,13 @@ QStringList DbHelper::getHighlights(int printWidth)
 {
     QStringList hl;
     QString ele=QString("BOOK TITLES+");
-    QString val=QString(":15290");
+    QString val=QString(":15451");
     hl.append(ele+val);
 
 
 
     ele=QString("BOOK VOLUME+");
-    val=QString(":65929");
+    val=QString(":66954");
     hl.append(ele+val);
 
     ele=QString("JOURNAL PRINT+");
@@ -46,7 +46,7 @@ QStringList DbHelper::getHighlights(int printWidth)
     hl.append(ele+val);
 
     ele=QString("NPTEL COURSE+");
-    val=QString(":291");
+    val=QString(":260");
     hl.append(ele+val);
 
 
