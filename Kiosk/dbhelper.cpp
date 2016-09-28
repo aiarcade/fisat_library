@@ -62,14 +62,14 @@ QStringList DbHelper::getHighlights(int printWidth)
 
 QString DbHelper::getQuoteOftheday()
 {
-    QString _quote="Do you know ? ?";
+    QString _quote="A single cloud can weight more than 1 million pounds";
     return _quote;
 }
 
 QImage DbHelper::getQuoteImage()
 {
     QImage quoteImage;
-    quoteImage.load("/Users/mahesh/Dropbox/library_software/fisat_library/Kiosk/el.jpg");
+    quoteImage.load("/tmp/el.jpg");
     return quoteImage;
 }
 
