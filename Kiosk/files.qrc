@@ -2,5 +2,22 @@
 <qresource prefix="/fonts" >
         <file>goodtimes.ttf</file>
 </qresource>
-
+<qresource prefix="/images" >
+        <file>level0.jpg</file>
+</qresource>
+<qresource prefix="/db" >
+        <file>lib.csv</file>
+</qresource>
+<qresource prefix="/images" >
+        <file>bookbank.png</file>
+</qresource>
+<qresource prefix="/images" >
+        <file>general.png</file>
+</qresource>
+<qresource prefix="/images" >
+        <file>generalreference.png</file>
+</qresource>
+<qresource prefix="/images" >
+        <file>mcareference.png</file>
+</qresource>
 </RCC>

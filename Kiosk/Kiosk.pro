@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     glwidget.cpp \
     proximityreader.cpp \
     bubble.cpp \
-    dbhelper.cpp
+    dbhelper.cpp \
+    glmap.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -28,7 +29,8 @@ HEADERS  += \
     glwidget.h \
     proximityreader.h \
     bubble.h \
-    dbhelper.h
+    dbhelper.h \
+    glmap.h
 
 FORMS    += \
     mainwindow.ui

@@ -3,7 +3,7 @@
 SearchWidget::SearchWidget(QWidget *parent) : QWidget(parent)
 {
 
-    libMap = new MapWidget();
+
 
     QHBoxLayout *searchInLayout = new QHBoxLayout;
 
@@ -97,20 +97,43 @@ void SearchWidget::search()
 
 
     */
+    QList<QStringList> results=duserQuery(searchInput->text());
+    QStringList headers;
+    headers<< "Accession No" << "Call No" <<"Author" <<"Title" << "Location";
+    searchView->setColumnCount(5);
+    searchView->setRowCount(results.length());
+    searchView->setHorizontalHeaderLabels(headers);
+    searchView->setColumnWidth(3,300);
+    searchView->setColumnWidth(2,700);
 
-    fillDummyData();
+    for(int index=0;index<results.length();index++)
+    {
+        searchView->setItem(index,0,new QTableWidgetItem(results[index][0]));
+        searchView->setItem(index,1,new QTableWidgetItem(results[index][1]));
+        searchView->setItem(index,2,new QTableWidgetItem(results[index][2]));
+        searchView->setItem(index,3,new QTableWidgetItem(results[index][3]));
+
+    }
+
 
 }
 
 void SearchWidget::resultCellClicked(int r, int c)
 {
+    QString callNo=searchView->item(r, c)->text();
+    MapWidget *libMap = new MapWidget();
+    libMap->setLocation(callNo);
+
+    libMap->setTitle(searchView->item(r, 2)->text(),
+                     searchView->item(r, 1)->text());
+    libMap->renderMap();
     libMap->show();
 }
 
 void SearchWidget::fillDummyData()
 {
     QStringList headers;
-    headers<< "Accession No" << "Call No" <<"Author" <<"Title" << "Location";
+    headers<< "Accession No" << "Call No" <<"Title" <<"Author" << "Location";
     searchView->setColumnCount(5);
     searchView->setRowCount(10);
     searchView->setHorizontalHeaderLabels(headers);
@@ -129,3 +152,30 @@ void SearchWidget::fillDummyData()
 
 
 }
+
+QList<QStringList>SearchWidget::duserQuery(QString userIn)
+{
+
+    QList<QStringList>  rdata;
+    QString sqlText("select * from L_BookDtls where L_BD_cTitle like '%"+userIn+
+                    "%' or L_BD_cAccessionNo like '%"+userIn+
+                    "%' or L_BD_cKeyWords like '%"+userIn+
+                    "%' or L_BD_cAuthor like '%"+userIn+
+                    "%' or L_BD_cCoAuthor like '%"+userIn+
+                    "%' or  L_BD_cCallNo like '%"+userIn+"%'");
+
+    QSqlQuery query(sqlText);
+    int index=0;
+    while (query.next())
+    {
+        QStringList _temp;
+        _temp << query.value(1).toString() << query.value(2).toString() << query.value(4).toString()
+             << query.value(8).toString();
+        rdata.append(_temp);
+    }
+    return rdata;
+
+
+
+}
+

@@ -263,10 +263,10 @@
      painter->fillRect(QRect((this->width()/5)-2, (this->height()/5)+600, (width()-2*width()/5)+50,highlights.length()*90),
                      QBrush(QColor(220,20,60, 128)));
 
-     QString _quote="Do you know, there are 100 elephants in FISAT ?";//dbHelper.getQuoteOftheday();
-     QImage quoteImage;
-     quoteImage.load("/Users/mahesh/Dropbox/library_software/fisat_library/Kiosk/el.jpg");
-     qDebug()<<quoteImage.width();
+     QString _quote=campusData->getQuoteOftheday();
+     QImage quoteImage=campusData->getQuoteImage();
+
+
      quoteImage=quoteImage.scaled(width()-(2*width()/5)+50,highlights.length()*90);
 
      painter->drawImage((this->width()/5), (this->height()/5)+600,
@@ -276,7 +276,7 @@
      painter->drawText((this->width()/5)+5, (this->height()/5)+600,
                         1000, 800,
                        Qt::AlignCenter | Qt::TextWordWrap ,_quote);
-
+    //qDebug()<<campusData->getLocation("CSE 003");
 
 
 
