@@ -55,7 +55,7 @@ QStringList DbHelper::getHighlights(int printWidth)
     hl.append(ele+val);
 
     ele=QString("DVD+");
-    val=QString(":2347");
+    val=QString(":2500");
     hl.append(ele+val);
     return hl;
 }

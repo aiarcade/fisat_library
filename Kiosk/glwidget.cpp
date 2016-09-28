@@ -270,7 +270,7 @@
                         quoteImage);
 
      painter->drawText((this->width()/5)+5, (this->height()/5)+600,
-                        1000, 800,
+                        700, 800,
                        Qt::AlignCenter | Qt::TextWordWrap ,_quote);
     //qDebug()<<campusData->getLocation("CSE 003");
 
