@@ -34,7 +34,8 @@ int main(int argc, char *argv[])
 
 
     MainWindow w;
-
+    w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+    w.setWindowTitle("KIOSK");
     //w.showFullScreen();
     w.show();
 
